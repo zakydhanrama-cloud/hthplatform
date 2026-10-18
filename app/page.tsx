@@ -1,97 +1,70 @@
 "use client";
 import { useState } from 'react';
 
-const alumniData = [
-  { id: 1, nama: "Budi Test", lokasi: "Amsterdam", project: "Solar Panel", sdg: "SDG 7", status: "Active", tahun: 2023 },
-  { id: 2, nama: "HTH Alumni", lokasi: "Jakarta", project: "Pendidikan", sdg: "SDG 4", status: "Active", tahun: 2024 },
-  { id: 3, nama: "Siti Amsterdam", lokasi: "Amsterdam", project: "Circular Economy", sdg: "SDG 12", status: "Active", tahun: 2024 },
-  { id: 4, nama: "Zaky Dhanrama", lokasi: "Amsterdam", project: "HTH Platform", sdg: "SDG 9", status: "Founder", tahun: 2025 },
+const data = [
+  { nama: "Budi Test", lokasi: "Amsterdam", flag: "🇳🇱", project: "Solar Panel", sdg: "SDG 7", color: "#FCC30B" },
+  { nama: "HTH Alumni", lokasi: "Jakarta", flag: "🇮🇩", project: "Pendidikan", sdg: "SDG 4", color: "#C5192D" },
+  { nama: "Siti A.", lokasi: "Amsterdam", flag: "🇳🇱", project: "Circular Economy", sdg: "SDG 12", color: "#BF8B2E" },
+  { nama: "Zaky Dhanrama", lokasi: "Amsterdam", flag: "🇳🇱", project: "HTH Platform", sdg: "SDG 9", color: "#FD6925" },
 ];
 
 const kpis = [
-  { label: "Total Alumni", value: "124", sub: "Tracked 100%" },
-  { label: "Amsterdam Hub", value: "18", sub: "Eropa" },
-  { label: "Jakarta Hub", value: "89", sub: "Indonesia" },
-  { label: "Active Project", value: "42", sub: "On-going" },
-  { label: "SDG 4 - Education", value: "35", sub: "Projects" },
-  { label: "SDG 7 - Energy", value: "22", sub: "Projects" },
-  { label: "SDG 13 - Climate", value: "18", sub: "Projects" },
-  { label: "Employment", value: "92%", sub: "After HTH" },
-  { label: "Sustainability", value: "87%", sub: "Impact Score" },
-  { label: "Partner", value: "24", sub: "Org & Company" },
-  { label: "Countries", value: "8", sub: "Covered" },
-  { label: "SDGs Covered", value: "17", sub: "All SDGs" },
+  ["Total Alumni", "124", "100% Tracked"], ["Amsterdam", "18", "Eropa Hub"], ["Jakarta", "89", "Indonesia Hub"],
+  ["Active Project", "42", "On-going"], ["SDG 4", "35", "Education"], ["SDG 7", "22", "Clean Energy"],
+  ["Employment", "92%", "After HTH"], ["Impact Score", "87%", "Sustainability"], ["Partners", "24", "Org"],
+  ["Countries", "8", "Covered"], ["SDGs", "17", "All Covered"], ["Growth", "+18%", "This Year"],
 ];
 
 export default function Page() {
-  const [filter, setFilter] = useState("All");
-  const [search, setSearch] = useState("");
+  const [q, setQ] = useState("");
+  const filtered = data.filter(d => d.nama.toLowerCase().includes(q.toLowerCase()));
   
-  const filtered = alumniData.filter(a => 
-    (filter === "All" || a.lokasi === filter || a.sdg === filter) &&
-    a.nama.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
-    <main className="min-h-screen bg-[#f8f9fa] p-4 md:p-8 font-sans">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border mb-6">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-black">HTH - 100% Track & Trace</h1>
-              <p className="text-gray-500 mt-1">Pendidikan • Lingkungan • SDGs • LIVE di Vercel! • Amsterdam</p>
-            </div>
-            <div className="bg-black text-white px-4 py-2 rounded-full text-sm">v2.0 LIVE</div>
+    <div style={{background: "#f6f7f8", minHeight: "100vh", padding: "24px", fontFamily: "Inter, sans-serif"}}>
+      <div style={{maxWidth: "1100px", margin: "0 auto"}}>
+        
+        <div style={{background: "white", borderRadius: "20px", padding: "28px", display: "flex", justifyContent: "space-between", alignItems: "center", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", border: "1px solid #eee"}}>
+          <div>
+            <h1 style={{fontSize: "28px", fontWeight: 900, margin: 0}}>HTH - 100% Track & Trace</h1>
+            <p style={{color: "#666", margin: "6px 0 0"}}>Pendidikan • Lingkungan • SDGs • LIVE • Amsterdam</p>
           </div>
+          <div style={{background: "black", color: "white", padding: "8px 16px", borderRadius: "20px", fontSize: "12px", fontWeight: 700}}>V2.1 PRO</div>
         </div>
 
-        {/* 12 KPI */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-6">
-          {kpis.map((kpi, i) => (
-            <div key={i} className="bg-white rounded-xl p-4 shadow-sm border hover:shadow-md transition">
-              <p className="text-xs text-gray-500 uppercase tracking-wide">{kpi.label}</p>
-              <p className="text-2xl font-bold mt-1">{kpi.value}</p>
-              <p className="text-xs text-green-600 mt-1">{kpi.sub}</p>
+        <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: "12px", marginTop: "20px"}}>
+          {kpis.map((k,i) => (
+            <div key={i} style={{background: "white", borderRadius: "16px", padding: "16px", border: "1px solid #eee"}}>
+              <div style={{fontSize: "11px", color: "#999", textTransform: "uppercase", letterSpacing: "0.5px"}}>{k[0]}</div>
+              <div style={{fontSize: "24px", fontWeight: 800, marginTop: "6px"}}>{k[1]}</div>
+              <div style={{fontSize: "12px", color: "#00a651", marginTop: "4px", fontWeight: 600}}>{k[2]}</div>
             </div>
           ))}
         </div>
 
-        {/* Alumni Trace */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border">
-          <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
-            <h2 className="text-xl font-bold">Alumni Full Trace</h2>
-            <div className="flex gap-2">
-              <input placeholder="Search nama..." value={search} onChange={e=>setSearch(e.target.value)} className="border rounded-full px-4 py-2 text-sm w-40" />
-              <select value={filter} onChange={e=>setFilter(e.target.value)} className="border rounded-full px-4 py-2 text-sm">
-                <option value="All">All</option>
-                <option value="Amsterdam">Amsterdam</option>
-                <option value="Jakarta">Jakarta</option>
-                <option value="SDG 4">SDG 4</option>
-                <option value="SDG 7">SDG 7</option>
-              </select>
-            </div>
+        <div style={{background: "white", borderRadius: "20px", padding: "24px", marginTop: "20px", border: "1px solid #eee", boxShadow: "0 1px 3px rgba(0,0,0,0.05)"}}>
+          <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px"}}>
+            <h2 style={{margin: 0, fontSize: "18px", fontWeight: 800}}>Alumni Full Trace</h2>
+            <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search alumni..." style={{border: "1px solid #ddd", borderRadius: "20px", padding: "8px 14px", fontSize: "13px", outline: "none"}} />
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead><tr className="text-left text-xs text-gray-400 uppercase border-b"><th className="pb-3">Nama</th><th>Lokasi</th><th>Project</th><th>SDG</th><th>Status</th></tr></thead>
+          <div style={{overflowX: "auto"}}>
+            <table style={{width: "100%", borderCollapse: "collapse"}}>
+              <thead><tr style={{textAlign: "left", fontSize: "11px", color: "#aaa", borderBottom: "1px solid #eee"}}><th style={{paddingBottom: "12px"}}>NAMA</th><th>LOKASI</th><th>PROJECT</th><th>SDG</th></tr></thead>
               <tbody>
-                {filtered.map(a => (
-                  <tr key={a.id} className="border-b last:border-0 hover:bg-gray-50">
-                    <td className="py-4 font-medium">{a.nama}</td>
-                    <td>{a.lokasi === 'Amsterdam' ? '🇳🇱' : '🇮🇩'} {a.lokasi}</td>
+                {filtered.map((a,i) => (
+                  <tr key={i} style={{borderBottom: "1px solid #f2f2f2"}}>
+                    <td style={{padding: "16px 0", fontWeight: 600}}>{a.nama}</td>
+                    <td>{a.flag} {a.lokasi}</td>
                     <td>{a.project}</td>
-                    <td><span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-bold">{a.sdg}</span></td>
-                    <td><span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">{a.status}</span></td>
+                    <td><span style={{background: a.color, color: "white", padding: "4px 10px", borderRadius: "12px", fontSize: "11px", fontWeight: 700}}>{a.sdg}</span></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="text-green-600 text-sm mt-6 font-bold">✅ Langkah 2 Berhasil! Dashboard PRO LIVE!</p>
+          <div style={{marginTop: "20px", background: "#e6f9ec", color: "#00a651", padding: "10px 16px", borderRadius: "12px", fontSize: "13px", fontWeight: 700}}>✅ UI Fixed! Langkah 2 Berhasil - Dashboard PRO!</div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
